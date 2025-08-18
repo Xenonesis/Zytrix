@@ -1,4 +1,4 @@
-import { json, type LoaderFunction, type LoaderFunctionArgs } from '@remix-run/cloudflare';
+import { json, type LoaderFunction, type LoaderFunctionArgs } from '@remix-run/node';
 
 /**
  * Diagnostic API for troubleshooting connection issues

@@ -1,4 +1,5 @@
 import { vitePlugin as remixVitePlugin } from '@remix-run/dev';
+import { vercelPreset } from '@vercel/remix/vite';
 import UnoCSS from 'unocss/vite';
 import { defineConfig, type ViteDevServer } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
@@ -13,9 +14,52 @@ export default defineConfig((config) => {
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     },
+    ssr: {
+      external: ['undici'],
+      noExternal: [],
+    },
     build: {
       target: 'esnext',
       outDir: 'build/client', // Vercel expects the build output in this directory
+      rollupOptions: {
+        external: [
+          'child_process', 
+          'fs', 
+          'os', 
+          'path', 
+          'crypto', 
+          'util',
+          'undici',
+          'node:*',
+          /^node:/
+        ],
+        output: {
+          manualChunks(id) {
+            // Only chunk modules that aren't externalized
+            if (id.includes('node_modules')) {
+              if (id.includes('@radix-ui')) {
+                return 'ui-vendor';
+              }
+              if (id.includes('@codemirror')) {
+                return 'codemirror-vendor';
+              }
+              if (id.includes('ai') || id.includes('@ai-sdk')) {
+                return 'ai-vendor';
+              }
+              if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
+                return 'chart-vendor';
+              }
+              if (id.includes('shiki')) {
+                return 'shiki-vendor';
+              }
+              if (id.includes('react') && !id.includes('react-chartjs-2')) {
+                return 'react-vendor';
+              }
+            }
+          },
+        },
+      },
+      chunkSizeWarningLimit: 1000, // Increase warning limit to 1MB
     },
     plugins: [
       nodePolyfills({
@@ -26,7 +70,14 @@ export default defineConfig((config) => {
           global: true,
         },
         protocolImports: true,
-        exclude: ['child_process', 'fs', 'path'],
+        exclude: [
+          'child_process', 
+          'fs', 
+          'crypto', 
+          'path', 
+          'undici',
+          'node:*'
+        ],
       }),
       {
         name: 'buffer-polyfill',
@@ -42,8 +93,27 @@ ${code}`,
           return null;
         },
       },
+      {
+        name: 'externalize-node-modules',
+        resolveId(id, importer) {
+          // Externalize undici and all node: imports
+          if (id === 'undici' || id.startsWith('node:') || id.startsWith('util/types')) {
+            return { id, external: true };
+          }
+          
+          // If this is being imported from undici, externalize it
+          if (importer && importer.includes('undici')) {
+            if (id.startsWith('node:') || ['util', 'crypto', 'fs', 'path', 'os'].includes(id)) {
+              return { id, external: true };
+            }
+          }
+          
+          return null;
+        },
+      },
       // Removed remixCloudflareDevProxy() for Vercel deployment
       remixVitePlugin({
+        presets: [vercelPreset()],
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,

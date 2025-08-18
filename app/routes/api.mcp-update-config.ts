@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs } from '@remix-run/cloudflare';
+import { type ActionFunctionArgs } from '@remix-run/node';
 import { createScopedLogger } from '~/utils/logger';
 import { MCPService, type MCPConfig } from '~/lib/services/mcpService';
 

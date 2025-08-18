@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from '@remix-run/cloudflare';
+import { json, type ActionFunction } from '@remix-run/node';
 
 export const action: ActionFunction = async ({ request }) => {
   if (request.method !== 'POST') {

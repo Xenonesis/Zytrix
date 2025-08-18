@@ -1,4 +1,4 @@
-import { json } from '@remix-run/cloudflare';
+import { json } from '@remix-run/node';
 import JSZip from 'jszip';
 
 // Function to detect if we're running in Cloudflare
