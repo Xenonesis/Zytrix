@@ -3,11 +3,6 @@
   "outputDirectory": "build/client",
   "devCommand": "remix vite:dev",
   "framework": "remix",
-  "functions": {
-    "build/server/nodejs-*/index.js": {
-      "maxDuration": 30
-    }
-  },
   "headers": [
     {
       "source": "/build/(.*)",
