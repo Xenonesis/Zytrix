@@ -4,7 +4,7 @@
   "devCommand": "remix vite:dev",
   "framework": "remix",
   "functions": {
-    "build/server/index.js": {
+    "build/server/nodejs-*/index.js": {
       "maxDuration": 30
     }
   },
