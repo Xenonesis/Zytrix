@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs, type LoaderFunctionArgs, json } from '@remix-run/node';
+import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-run/node';
 import type { VercelProjectInfo } from '~/types/vercel';
 
 // Function to detect framework from project files

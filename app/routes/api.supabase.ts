@@ -1,7 +1,7 @@
-import { json, type ActionFunction } from '@remix-run/node';
+import { json, type ActionFunctionArgs } from '@remix-run/node';
 import type { SupabaseProject } from '~/types/supabase';
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   if (request.method !== 'POST') {
     return json({ error: 'Method not allowed' }, { status: 405 });
   }

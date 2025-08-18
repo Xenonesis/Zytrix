@@ -1,8 +1,8 @@
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunctionArgs } from '@remix-run/node';
 import { LLMManager } from '~/lib/modules/llm/manager';
 import { getApiKeysFromCookie } from '~/lib/api/cookies';
 
-export const loader: LoaderFunction = async ({ context, request }) => {
+export const loader = async ({ context, request }: LoaderFunctionArgs) => {
   // Get API keys from cookie
   const cookieHeader = request.headers.get('Cookie');
   const apiKeysFromCookie = getApiKeysFromCookie(cookieHeader);

@@ -18,21 +18,22 @@ export default defineConfig((config) => {
     },
     plugins: [
       nodePolyfills({
-        include: ['buffer', 'process', 'util', 'stream'],
+        include: ['buffer', 'process', 'stream'],
         globals: {
           Buffer: true,
           process: true,
           global: true,
         },
         protocolImports: true,
-        exclude: ['child_process', 'fs', 'path'],
+        exclude: ['child_process', 'fs', 'path', 'util'],
       }),
       {
         name: 'buffer-polyfill',
         transform(code, id) {
           if (id.includes('env.mjs')) {
             return {
-              code: `import { Buffer } from 'buffer';\n${code}`,
+              code: `import { Buffer } from 'buffer';
+${code}`,
               map: null,
             };
           }
@@ -67,6 +68,18 @@ export default defineConfig((config) => {
           api: 'modern-compiler',
         },
       },
+    },
+    resolve: {
+      alias: {
+        // Handle the util/types issue
+        'util/types': 'node-util-types-stub',
+      },
+    },
+    ssr: {
+      noExternal: [
+        // Add any packages that need to be processed by Vite
+        '@xterm/xterm',
+      ],
     },
   };
 });

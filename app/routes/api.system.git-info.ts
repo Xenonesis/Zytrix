@@ -1,4 +1,4 @@
-import { json, type LoaderFunction, type LoaderFunctionArgs } from '@remix-run/node';
+import { json, type LoaderFunctionArgs } from '@remix-run/node';
 
 interface GitInfo {
   local: {
@@ -61,7 +61,7 @@ declare const __GIT_REPO_NAME: string;
  * declare const __GIT_REPO_URL: string;
  */
 
-export const loader: LoaderFunction = async ({ request, context }: LoaderFunctionArgs & { context: AppContext }) => {
+export const loader = async ({ request, context }: LoaderFunctionArgs & { context: AppContext }) => {
   console.log('Git info API called with URL:', request.url);
 
   // Handle CORS preflight requests

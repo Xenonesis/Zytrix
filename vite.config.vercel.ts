@@ -29,6 +29,7 @@ export default defineConfig((config) => {
           'path', 
           'crypto', 
           'util',
+          'util/types',
           'undici',
           'node:*',
           /^node:/
@@ -97,13 +98,18 @@ ${code}`,
         name: 'externalize-node-modules',
         resolveId(id, importer) {
           // Externalize undici and all node: imports
-          if (id === 'undici' || id.startsWith('node:') || id.startsWith('util/types')) {
+          if (id === 'undici' || id.startsWith('node:')) {
             return { id, external: true };
+          }
+          
+          // Handle util/types specifically
+          if (id === 'util/types' || id.endsWith('/util/types')) {
+            return { id: 'node:util/types', external: true };
           }
           
           // If this is being imported from undici, externalize it
           if (importer && importer.includes('undici')) {
-            if (id.startsWith('node:') || ['util', 'crypto', 'fs', 'path', 'os'].includes(id)) {
+            if (id.startsWith('node:') || ['util', 'crypto', 'fs', 'path', 'os', 'util/types'].includes(id)) {
               return { id, external: true };
             }
           }

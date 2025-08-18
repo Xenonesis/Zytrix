@@ -1,5 +1,4 @@
-import type { ActionFunctionArgs, LoaderFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
+import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-run/node';
 
 // Check if we're in a serverless environment (Vercel, Cloudflare, etc.)
 const isServerless = process.env.VERCEL || process.env.CF_PAGES || !process.platform;
@@ -38,7 +37,7 @@ const getDiskInfo = async (): Promise<DiskInfo[]> => {
   ];
 };
 
-export const loader: LoaderFunction = async ({ request: _request }) => {
+export const loader = async ({ request: _request }: LoaderFunctionArgs) => {
   try {
     return json(await getDiskInfo());
   } catch (error) {
