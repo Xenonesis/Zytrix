@@ -76,8 +76,8 @@ export default defineConfig((config) => {
           'fs', 
           'crypto', 
           'path', 
-          'undici',
-          'node:*'
+          'undici' as any,
+          'node:*' as any
         ],
       }),
       {

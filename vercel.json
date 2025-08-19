@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build:vercel",
+  "buildCommand": "pnpm run build:vercel",
   "outputDirectory": "build/client",
   "devCommand": "remix vite:dev",
   "framework": "remix",
