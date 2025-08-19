@@ -98,6 +98,7 @@
     "@remix-run/cloudflare-pages": "^2.15.2",
     "@remix-run/node": "^2.16.8",
     "@remix-run/react": "^2.16.8",
+    "@remix-run/server-runtime": "2.16.8",
     "@tanstack/react-virtual": "^3.13.0",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@uiw/codemirror-theme-vscode": "^4.23.6",

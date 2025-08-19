@@ -11,3 +11,8 @@ interface Performance {
     usedJSHeapSize: number;
   };
 }
+
+// Ensure Web Crypto API is available in all environments
+declare global {
+  var crypto: Crypto;
+}

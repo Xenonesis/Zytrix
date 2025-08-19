@@ -1,5 +1,5 @@
-import type { ActionFunctionArgs } from '@remix-run/node';
-import { json } from '@remix-run/node';
+import type { ActionFunctionArgs } from '@remix-run/server-runtime';
+import { json } from '@remix-run/server-runtime';
 import type { NetlifySiteInfo } from '~/types/netlify';
 
 interface DeployRequestBody {
@@ -107,7 +107,7 @@ export async function action({ request }: ActionFunctionArgs) {
       // Use Web Crypto API for serverless compatibility
       const encoder = new TextEncoder();
       const data = encoder.encode(content);
-      const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+      const hashBuffer = await (globalThis as any).crypto.subtle.digest('SHA-1', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       fileDigests[normalizedPath] = hash;

@@ -1,4 +1,5 @@
-import { json, type LoaderFunctionArgs } from '@remix-run/node';
+import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
+import { json } from '@remix-run/server-runtime';
 
 interface GitInfo {
   local: {
@@ -86,7 +87,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs & { contex
     const cookieToken = request.headers
       .get('Cookie')
       ?.split(';')
-      .find((cookie) => cookie.trim().startsWith('githubToken='))
+      .find((cookie: string) => cookie.trim().startsWith('githubToken='))
       ?.split('=')[1];
 
     // Also check for token in Authorization header
@@ -254,7 +255,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs & { contex
         const username = request.headers
           .get('Cookie')
           ?.split(';')
-          .find((cookie) => cookie.trim().startsWith('githubUsername='))
+          .find((cookie: string) => cookie.trim().startsWith('githubUsername='))
           ?.split('=')[1];
 
         if (!username) {

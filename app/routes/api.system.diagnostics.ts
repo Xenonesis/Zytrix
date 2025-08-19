@@ -1,4 +1,5 @@
-import { json, type LoaderFunctionArgs } from '@remix-run/node';
+import type { LoaderFunctionArgs } from '@remix-run/server-runtime';
+import { json } from '@remix-run/server-runtime';
 
 /**
  * Diagnostic API for troubleshooting connection issues
@@ -22,7 +23,7 @@ export const loader = async ({ request, context }: LoaderFunctionArgs & { contex
   // Check cookies
   const cookieHeader = request.headers.get('Cookie') || '';
   const cookies = cookieHeader.split(';').reduce(
-    (acc, cookie) => {
+    (acc: Record<string, string>, cookie: string) => {
       const [key, value] = cookie.trim().split('=');
 
       if (key) {

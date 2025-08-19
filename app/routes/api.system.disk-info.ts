@@ -1,4 +1,5 @@
-import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-run/node';
+import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/server-runtime';
+import { json } from '@remix-run/server-runtime';
 
 // Check if we're in a serverless environment (Vercel, Cloudflare, etc.)
 const isServerless = process.env.VERCEL || process.env.CF_PAGES || !process.platform;
