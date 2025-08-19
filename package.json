@@ -30,6 +30,7 @@
     "typegen": "wrangler types",
     "preview": "pnpm run build && pnpm run start",
     "prepare": "husky",
+    
     "clean": "node scripts/clean.js",
     "electron:build:deps": "concurrently \"pnpm electron:build:main\" \"pnpm electron:build:preload\" --kill-others-on-fail",
     "electron:build:main": "vite build --config ./electron/main/vite.config.ts",
