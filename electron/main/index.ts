@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
-import { createRequestHandler } from '@remix-run/node';
+/* dynamic import of createRequestHandler at runtime to avoid type issues
+   (the import is performed inside the protocol handler) */
 import electron, { app, BrowserWindow, ipcMain, protocol, session } from 'electron';
 import log from 'electron-log';
 import path from 'node:path';
@@ -116,6 +117,7 @@ declare global {
       }
 
       // Create request handler with the server build
+      const { createRequestHandler } = (await import('@remix-run/node')) as any;
       const handler = createRequestHandler(serverBuild, 'production');
       console.log('Handling request with server build:', req.url);
 

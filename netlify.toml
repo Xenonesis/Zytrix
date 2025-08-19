@@ -1,0 +1,6 @@
+[build]
+  command = "pnpm run build"
+  publish = "build/client"
+
+[context.production.environment]
+  NODE_VERSION = "18.18.0"

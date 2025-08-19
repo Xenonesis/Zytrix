@@ -1,5 +1,5 @@
-import { createReadableStreamFromReadable } from '@remix-run/node';
-import type { ServerBuild } from '@remix-run/node';
+import { Readable } from 'node:stream';
+type ServerBuild = any;
 import mime from 'mime';
 import { createReadStream, promises as fs } from 'node:fs';
 import path from 'node:path';
@@ -16,9 +16,9 @@ export async function loadServerBuild(): Promise<any> {
   const serverBuildPath = path.join(app.getAppPath(), 'build', 'server', 'index.js');
   console.log(`Loading server build... path is ${serverBuildPath}`);
 
-  try {
+    try {
     const fileUrl = pathToFileURL(serverBuildPath).href;
-    const serverBuild: ServerBuild = /** @type {ServerBuild} */ await import(fileUrl);
+    const serverBuild = /** @type {any} */ (await import(fileUrl));
     console.log('Server build loaded successfully');
 
     // eslint-disable-next-line consistent-return
@@ -64,6 +64,7 @@ export async function serveAsset(req: Request, assetsPath: string): Promise<Resp
 
   console.log('Serving file with mime type:', mimeType);
 
+  const { createReadableStreamFromReadable } = (await import('@remix-run/node').catch(() => ({ createReadableStreamFromReadable: (r: NodeJS.ReadableStream) => (Readable as any).toWeb ? (Readable as any).toWeb(r) : (r as unknown) as ReadableStream }))) as any;
   const body = createReadableStreamFromReadable(createReadStream(fullPath));
 
   // eslint-disable-next-line consistent-return
