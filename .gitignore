@@ -45,6 +45,7 @@ changelogUI.md
 docs/instructions/Roadmap.md
 .cursorrules
 *.md
+!README.md
 .qodo
 
 .vercel
