@@ -1,8 +1,7 @@
-import type { ServerBuild } from '@remix-run/cloudflare';
 import { createPagesFunctionHandler } from '@remix-run/cloudflare-pages';
 
 export const onRequest: PagesFunction = async (context) => {
-  const serverBuild = (await import('../build/server')) as unknown as ServerBuild;
+  const serverBuild: any = await import('../build/server');
 
   const handler = createPagesFunctionHandler({
     build: serverBuild,

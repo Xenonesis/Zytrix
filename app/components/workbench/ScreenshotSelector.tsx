@@ -189,11 +189,20 @@ export const ScreenshotSelector = memo(
             const imageDataList = (window as any).__BOLT_IMAGE_DATA_LIST__ || [];
 
             if (setUploadedFiles && setImageDataList) {
-              // Update the files and image data
-              const file = new File([blob], 'screenshot.png', { type: 'image/png' });
-              setUploadedFiles([...uploadedFiles, file]);
-              setImageDataList([...imageDataList, base64Image]);
-              toast.success('Screenshot captured and added to chat');
+              /*
+               * Update the files and image data
+               * Check if File constructor is available (browser environment)
+               */
+              if (typeof File !== 'undefined') {
+                const file = new File([blob], 'screenshot.png', { type: 'image/png' });
+                setUploadedFiles([...uploadedFiles, file]);
+                setImageDataList([...imageDataList, base64Image]);
+                toast.success('Screenshot captured and added to chat');
+              } else {
+                // Fallback for environments where File is not available
+                setImageDataList([...imageDataList, base64Image]);
+                toast.success('Screenshot captured and added to chat');
+              }
             } else {
               toast.error('Could not add screenshot to chat');
             }

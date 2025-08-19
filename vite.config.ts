@@ -6,6 +6,7 @@ import { optimizeCssModules } from 'vite-plugin-optimize-css-modules';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import * as dotenv from 'dotenv';
 
+
 dotenv.config();
 
 export default defineConfig((config) => {
