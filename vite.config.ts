@@ -31,6 +31,20 @@ export default defineConfig((config) => {
       target: 'esnext',
     },
     plugins: [
+      {
+        name: 'global-polyfills',
+        transform(code, id) {
+          // Apply the File polyfill to all modules during build
+          if (config.command === 'build') {
+            return {
+              code: `${filePolyfill}
+${code}`,
+              map: null,
+            };
+          }
+          return null;
+        },
+      },
       nodePolyfills({
         include: ['buffer', 'process', 'stream'],
         globals: {
@@ -47,21 +61,6 @@ export default defineConfig((config) => {
           if (id.includes('env.mjs')) {
             return {
               code: `import { Buffer } from 'buffer';
-${code}`,
-              map: null,
-            };
-          }
-
-          return null;
-        },
-      },
-      {
-        name: 'file-polyfill',
-        transform(code, id) {
-          // Apply the File polyfill to the entry point or where needed
-          if (id.includes('node_modules/miniflare') || id.includes('node_modules/wrangler')) {
-            return {
-              code: `${filePolyfill}
 ${code}`,
               map: null,
             };
