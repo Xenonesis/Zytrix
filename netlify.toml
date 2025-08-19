@@ -1,7 +1,3 @@
 [build]
 command = "pnpm run build"
 publish = "build/client"
-
-# Explicitly disable all Netlify extensions
-# This should prevent Netlify from trying to install the "neon" extension
-[plugins]
