@@ -104,12 +104,13 @@ export async function action({ request }: ActionFunctionArgs) {
     for (const [filePath, content] of Object.entries(files)) {
       // Ensure file path starts with a forward slash
       const normalizedPath = filePath.startsWith('/') ? filePath : '/' + filePath;
+
       // Use Web Crypto API for serverless compatibility
       const encoder = new TextEncoder();
       const data = encoder.encode(content);
       const hashBuffer = await (globalThis as any).crypto.subtle.digest('SHA-1', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      const hash = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
       fileDigests[normalizedPath] = hash;
     }
 

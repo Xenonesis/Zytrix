@@ -76,7 +76,10 @@ async function chatAction({ context, request }: ActionFunctionArgs & { context: 
 
   try {
     const mcpService = MCPService.getInstance();
-    const totalMessageContent = messages.reduce((acc: string, message: { content: string }) => acc + message.content, '');
+    const totalMessageContent = messages.reduce(
+      (acc: string, message: { content: string }) => acc + message.content,
+      '',
+    );
     logger.debug(`Total message length: ${totalMessageContent.split(' ').length}, words`);
 
     let lastChunk: string | undefined = undefined;

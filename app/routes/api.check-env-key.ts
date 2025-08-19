@@ -10,7 +10,7 @@ export const loader = async ({ context, request }: LoaderFunctionArgs & { contex
     return Response.json({ isSet: false });
   }
 
-  const llmManager = LLMManager.getInstance('cloudflare' in context ? context?.cloudflare?.env as any : undefined);
+  const llmManager = LLMManager.getInstance('cloudflare' in context ? (context?.cloudflare?.env as any) : undefined);
   const providerInstance = llmManager.getProvider(provider);
 
   if (!providerInstance || !providerInstance.config.apiTokenKey) {

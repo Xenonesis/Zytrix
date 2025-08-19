@@ -3,7 +3,6 @@ import { json } from '@remix-run/server-runtime';
 
 // Check if we're in a serverless environment (Vercel, Cloudflare, etc.)
 const isServerless = process.env.VERCEL || process.env.CF_PAGES || !process.platform;
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 interface DiskInfo {
   filesystem: string;
@@ -17,8 +16,10 @@ interface DiskInfo {
 }
 
 const getDiskInfo = async (): Promise<DiskInfo[]> => {
-  // Always return mock data for serverless environments like Vercel
-  // Generate random percentage between 40-60%
+  /*
+   * Always return mock data for serverless environments like Vercel
+   * Generate random percentage between 40-60%
+   */
   const percentage = Math.floor(40 + Math.random() * 20);
   const totalSize = 500 * 1024 * 1024 * 1024; // 500GB
   const usedSize = Math.floor((totalSize * percentage) / 100);

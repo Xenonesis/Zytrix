@@ -8,7 +8,7 @@ export const loader = async ({ context, request }: LoaderFunctionArgs & { contex
   const apiKeysFromCookie = getApiKeysFromCookie(cookieHeader);
 
   // Initialize the LLM manager to access environment variables
-  const llmManager = LLMManager.getInstance('cloudflare' in context ? context?.cloudflare?.env as any : undefined);
+  const llmManager = LLMManager.getInstance('cloudflare' in context ? (context?.cloudflare?.env as any) : undefined);
 
   // Get all provider instances to find their API token keys
   const providers = llmManager.getAllProviders();

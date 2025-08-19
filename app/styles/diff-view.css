@@ -63,7 +63,7 @@
   flex-shrink: 0;
   padding: 0.125rem 0 0.125rem 0.5rem;
   text-align: left;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   color: var(--bolt-elements-textTertiary);
   border-right: 1px solid var(--bolt-elements-borderColor);
   background-color: var(--bolt-elements-background-depth-1);
@@ -71,7 +71,7 @@
 
 .diff-line-content {
   padding: 0.125rem 1rem 0.125rem 1rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   white-space: pre;
   flex: 1;
 }

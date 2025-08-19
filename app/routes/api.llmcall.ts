@@ -66,7 +66,7 @@ async function llmCallAction({ context, request }: ActionFunctionArgs & { contex
             content: `${message}`,
           },
         ],
-        env: 'cloudflare' in context ? context.cloudflare?.env as any : undefined,
+        env: 'cloudflare' in context ? (context.cloudflare?.env as any) : undefined,
         apiKeys,
         providerSettings,
       });
@@ -94,7 +94,11 @@ async function llmCallAction({ context, request }: ActionFunctionArgs & { contex
     }
   } else {
     try {
-      const models = await getModelList({ apiKeys, providerSettings, serverEnv: 'cloudflare' in context ? context.cloudflare?.env as any : undefined });
+      const models = await getModelList({
+        apiKeys,
+        providerSettings,
+        serverEnv: 'cloudflare' in context ? (context.cloudflare?.env as any) : undefined,
+      });
       const modelDetails = models.find((m: ModelInfo) => m.name === model);
 
       if (!modelDetails) {
@@ -121,7 +125,7 @@ async function llmCallAction({ context, request }: ActionFunctionArgs & { contex
         ],
         model: providerInfo.getModelInstance({
           model: modelDetails.name,
-          serverEnv: 'cloudflare' in context ? context.cloudflare?.env as any : undefined,
+          serverEnv: 'cloudflare' in context ? (context.cloudflare?.env as any) : undefined,
           apiKeys,
           providerSettings,
         }),
