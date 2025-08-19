@@ -1,3 +1,7 @@
+# Netlify configuration file
+# This file specifies the build command and publish directory for the project
+# We're explicitly not using any Netlify extensions to avoid the "neon" extension installation issue
+
 [build]
 command = "pnpm run build"
 publish = "build/client"
