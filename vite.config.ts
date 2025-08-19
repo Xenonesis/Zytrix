@@ -9,6 +9,19 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+// Polyfill for File API in environments where it's not available
+const filePolyfill = `
+if (typeof File === 'undefined') {
+  global.File = class File extends Blob {
+    constructor(chunks, filename, options = {}) {
+      super(chunks, options);
+      this.name = filename;
+      this.lastModified = options.lastModified || Date.now();
+    }
+  };
+}
+`;
+
 export default defineConfig((config) => {
   return {
     define: {
@@ -34,6 +47,21 @@ export default defineConfig((config) => {
           if (id.includes('env.mjs')) {
             return {
               code: `import { Buffer } from 'buffer';
+${code}`,
+              map: null,
+            };
+          }
+
+          return null;
+        },
+      },
+      {
+        name: 'file-polyfill',
+        transform(code, id) {
+          // Apply the File polyfill to the entry point or where needed
+          if (id.includes('node_modules/miniflare') || id.includes('node_modules/wrangler')) {
+            return {
+              code: `${filePolyfill}
 ${code}`,
               map: null,
             };
